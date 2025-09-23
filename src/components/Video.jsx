@@ -140,20 +140,26 @@ export const Lid = ({ scaleX, scaleY, rotate, translate }) => {
   }}
   className="
     absolute inset-0 
-    w-[56rem] h-[34rem] 
-    rounded-2xl bg-[#010101] p-2
-    max-sm:w-[20rem] max-sm:h-[12rem]
+    w-[56rem] h-[34rem] rounded-2xl bg-[#010101] p-2
+    max-sm:w-full max-sm:h-auto
   "
 >
+
   <div className="absolute inset-0 rounded-lg bg-[#272729]" />
-  <video
-    ref={videoRef}
-    src="/video.mp4"
-    muted
-    playsInline
-    loop
-    className="absolute inset-0 h-full w-full rounded-lg object-cover bg-black"
-  />
+<video
+  ref={videoRef}
+  src="/video.mp4"
+  muted
+  playsInline
+  loop
+  className="
+    absolute inset-0 
+    h-full w-full 
+    rounded-lg object-contain bg-black
+    max-sm:w-screen max-sm:h-auto
+  "
+/>
+
 </motion.div>
 
     </div>
