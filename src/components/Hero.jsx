@@ -149,7 +149,7 @@ const Hero = () => {
       {/* Hero content */}
       <div
         ref={containerRef}
-        className="relative z-10 flex items-center h-[calc(100%-120px)] px-4 sm:px-10 mt-10 sm:mt-20"
+        className="relative z-10 flex items-center px-4 sm:px-10 mt-20 sm:mt-20 h-auto sm:h-[calc(100%-120px)]"
       >
         <div ref={leftColRef} className="w-6 sm:w-12 mr-3 sm:mr-6 flex-shrink-0" />
 
@@ -216,5 +216,4 @@ const Hero = () => {
 };
 
 export default Hero;
-
 
