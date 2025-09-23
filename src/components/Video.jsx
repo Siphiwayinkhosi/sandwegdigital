@@ -1,10 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import {
- 
   IconCaretRightFilled,
   IconCaretUpFilled,
- 
   IconCaretLeftFilled,
   IconCaretDownFilled,
 } from "@tabler/icons-react";
@@ -16,8 +14,7 @@ function cn(...classes) {
 
 export default function Video() {
   return (
-  <div className="w-full overflow-hidden bg-black -mt-8">
-
+    <div className="w-full overflow-hidden bg-black -mt-8">
       <MacbookScroll
         title={
           <span>
@@ -53,11 +50,15 @@ export const MacbookScroll = ({ title, showGradient }) => {
   return (
     <div
       ref={ref}
-      className="flex min-h-[200vh] shrink-0 scale-[0.55] flex-col items-center justify-start py-0 [perspective:1200px] sm:scale-75 md:scale-100 md:py-60"
+      className="
+        flex min-h-[200vh] shrink-0 scale-[0.55] flex-col items-center justify-start py-0 [perspective:1200px]
+        sm:scale-75 md:scale-100 md:py-60
+        max-[639px]:scale-90
+      "
     >
       <motion.h2
         style={{ translateY: textTransform, opacity: textOpacity }}
-        className="mb-16 text-center text-4xl font-bold text-neutral-800 dark:text-white"
+        className="mb-16 text-center text-4xl font-bold text-neutral-800 dark:text-white max-[639px]:text-2xl max-[639px]:px-4"
       >
         {title}
       </motion.h2>
@@ -65,7 +66,12 @@ export const MacbookScroll = ({ title, showGradient }) => {
       <Lid scaleX={scaleX} scaleY={scaleY} rotate={rotate} translate={translate} />
 
       {/* Base */}
-      <div className="relative -z-10 h-[34rem] w-[56rem] overflow-hidden rounded-2xl bg-gray-200 dark:bg-[#272729]">
+      <div
+        className="
+          relative -z-10 h-[34rem] w-[56rem] overflow-hidden rounded-2xl bg-gray-200 dark:bg-[#272729]
+          max-[639px]:h-[16rem] max-[639px]:w-[22rem]
+        "
+      >
         <div className="relative h-10 w-full">
           <div className="absolute inset-x-0 mx-auto h-4 w-[80%] bg-[#050505]" />
         </div>
@@ -107,13 +113,16 @@ export const Lid = ({ scaleX, scaleY, rotate, translate }) => {
           transformOrigin: "bottom",
           transformStyle: "preserve-3d",
         }}
-        className="relative h-[22rem] w-[56rem] rounded-2xl bg-[#010101] p-2"
+        className="
+          relative h-[22rem] w-[56rem] rounded-2xl bg-[#010101] p-2
+          max-[639px]:h-[14rem] max-[639px]:w-[22rem]
+        "
       >
         <div
           style={{ boxShadow: "0px 2px 0px 2px #171717 inset" }}
           className="absolute inset-0 flex items-center justify-center rounded-lg bg-[#010101]"
         >
-          <span className="text-white text-xl md:text-2xl lg:text-3xl">
+          <span className="text-white text-xl md:text-2xl lg:text-3xl max-[639px]:text-base">
             Sandweg <br /> Branding & Marketing
           </span>
         </div>
@@ -128,7 +137,10 @@ export const Lid = ({ scaleX, scaleY, rotate, translate }) => {
           transformStyle: "preserve-3d",
           transformOrigin: "top",
         }}
-        className="absolute inset-0 h-[34rem] w-[56rem] rounded-2xl bg-[#010101] p-2"
+        className="
+          absolute inset-0 h-[34rem] w-[56rem] rounded-2xl bg-[#010101] p-2
+          max-[639px]:h-[16rem] max-[639px]:w-[22rem]
+        "
       >
         <div className="absolute inset-0 rounded-lg bg-[#272729]" />
         <video
@@ -137,7 +149,7 @@ export const Lid = ({ scaleX, scaleY, rotate, translate }) => {
           muted
           playsInline
           loop
-          className="absolute inset-0 h-full w-full rounded-lg object-contain bg-black"
+          className="absolute inset-0 h-full w-full rounded-lg object-cover bg-black max-[639px]:object-cover"
         />
       </motion.div>
     </div>
@@ -146,7 +158,10 @@ export const Lid = ({ scaleX, scaleY, rotate, translate }) => {
 
 export const Trackpad = () => (
   <div
-    className="mx-auto my-2 h-32 w-[45%] rounded-xl"
+    className="
+      mx-auto my-2 h-32 w-[45%] rounded-xl
+      max-[639px]:h-20 max-[639px]:w-[65%]
+    "
     style={{ boxShadow: "0px 0px 1px 1px #00000020 inset" }}
   ></div>
 );
@@ -201,7 +216,7 @@ export const Keypad = () => {
         <KBtn className="w-16">ctrl</KBtn>
         <KBtn className="w-16">opt</KBtn>
         <KBtn className="w-20">cmd</KBtn>
-        <KBtn className="w-[20rem]">space</KBtn>
+        <KBtn className="w-[20rem] max-[639px]:w-[12rem]">space</KBtn>
         <KBtn className="w-20">cmd</KBtn>
         <KBtn className="w-16">opt</KBtn>
         <div className="flex flex-col ml-2">
@@ -237,13 +252,14 @@ export const KBtn = ({ className, children, backlit = true }) => (
 
 export const SpeakerGrid = () => (
   <div
-    className="mt-2 flex h-40 gap-[2px] px-[0.5px]"
+    className="mt-2 flex h-40 gap-[2px] px-[0.5px] max-[639px]:h-20"
     style={{
       backgroundImage: "radial-gradient(circle, #08080A 0.5px, transparent 0.5px)",
       backgroundSize: "3px 3px",
     }}
   ></div>
 );
+
 
 
 
