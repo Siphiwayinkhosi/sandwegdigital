@@ -11,9 +11,7 @@ const Hero = () => {
   const line2Ref = useRef(null);
   const line3Ref = useRef(null);
 
-  // Expose runMeasure outside effect
   const runMeasureRef = useRef(() => {});
-
   const [pos, setPos] = useState({
     left: 60,
     top: 0,
@@ -86,7 +84,7 @@ const Hero = () => {
 
   return (
     <section
-      className="relative w-full  text-white font-[Raleway]"
+      className="relative w-full text-white font-[Raleway]"
       style={{
         backgroundImage: "url('/sand.png')",
         backgroundSize: "cover",
@@ -97,32 +95,31 @@ const Hero = () => {
       <div className="absolute inset-0 bg-black/70 z-0" />
 
       {/* Top bar */}
-      <div className="relative z-10 flex justify-between items-center px-10 py-6">
-<motion.div
-  className="flex items-center gap-6"
-  initial={{ opacity: 0, x: -30 }}
-  animate={{ opacity: 1, x: 0 }}
-  transition={{ duration: 0.9 }}
->
-  <img src="/logo.png" alt="Logo" className="w-32 md:w-40" />
-  <div className="flex flex-col leading-snug">
-    <span className="uppercase text-base md:text-lg font-semibold tracking-wider">
-      SANDWEG
-    </span>
-    <span className="uppercase text-base md:text-lg font-semibold tracking-wider">
-      Branding & Marketing
-    </span>
-  </div>
-</motion.div>
+      <div className="relative z-10 flex justify-between items-center px-4 sm:px-10 py-4 sm:py-6">
+        <motion.div
+          className="flex items-center gap-3 sm:gap-6"
+          initial={{ opacity: 0, x: -30 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.9 }}
+        >
+          {/* ✅ smaller logo on mobile */}
+          <img src="/logo.png" alt="Logo" className="w-20 sm:w-32 md:w-40" />
+          <div className="flex flex-col leading-snug">
+            <span className="uppercase text-sm sm:text-base md:text-lg font-semibold tracking-wider">
+              SANDWEG
+            </span>
+            <span className="uppercase text-sm sm:text-base md:text-lg font-semibold tracking-wider">
+              Branding & Marketing
+            </span>
+          </div>
+        </motion.div>
 
-
-
-        <div className="flex flex-col items-start gap-3 w-max">
+        <div className="flex flex-col items-start gap-2 sm:gap-3 w-max">
           {/* Language selector */}
-          <div className="flex border border-gray-500 rounded-full overflow-hidden text-sm w-full">
+          <div className="flex border border-gray-500 rounded-full overflow-hidden text-xs sm:text-sm w-full">
             <button
               onClick={() => setLanguage("DE")}
-              className={`px-4 py-1 transition w-1/2 ${
+              className={`px-3 sm:px-4 py-1 transition w-1/2 ${
                 language === "DE" ? "bg-white text-black" : "text-white"
               }`}
             >
@@ -130,7 +127,7 @@ const Hero = () => {
             </button>
             <button
               onClick={() => setLanguage("EN")}
-              className={`px-4 py-1 transition w-1/2 ${
+              className={`px-3 sm:px-4 py-1 transition w-1/2 ${
                 language === "EN" ? "bg-white text-black" : "text-white"
               }`}
             >
@@ -142,7 +139,7 @@ const Hero = () => {
           <motion.button
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            className="border border-gray-400 px-5 py-2 rounded-full text-sm tracking-wide hover:bg-white hover:text-black transition w-full"
+            className="border border-gray-400 px-4 sm:px-5 py-2 rounded-full text-xs sm:text-sm tracking-wide hover:bg-white hover:text-black transition w-full"
           >
             Sprit mit uns →
           </motion.button>
@@ -152,40 +149,28 @@ const Hero = () => {
       {/* Hero content */}
       <div
         ref={containerRef}
-        className="relative z-10 flex items-center h-[calc(100%-120px)] px-10 mt-20"
+        className="relative z-10 flex items-center h-[calc(100%-120px)] px-4 sm:px-10 mt-10 sm:mt-20"
       >
-        <div ref={leftColRef} className="w-12 mr-6 flex-shrink-0" />
+        <div ref={leftColRef} className="w-6 sm:w-12 mr-3 sm:mr-6 flex-shrink-0" />
 
-        <div className="flex flex-col justify-center leading-tight space-y-6">
+        <div className="flex flex-col justify-center leading-tight space-y-4 sm:space-y-6">
           <motion.div
             ref={line1Ref}
-            className="uppercase tracking-[0.35em] text-5xl md:text-8xl font-semibold"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.9, delay: 0.6 }}
-            onAnimationComplete={() => runMeasureRef.current()}
+            className="uppercase tracking-[0.15em] sm:tracking-[0.35em] text-3xl sm:text-5xl md:text-8xl font-semibold"
           >
             DESIGN
           </motion.div>
 
           <motion.div
             ref={line2Ref}
-            className="uppercase tracking-[0.35em] text-5xl md:text-8xl font-semibold"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.9, delay: 0.75 }}
-            onAnimationComplete={() => runMeasureRef.current()}
+            className="uppercase tracking-[0.15em] sm:tracking-[0.35em] text-3xl sm:text-5xl md:text-8xl font-semibold"
           >
             MEETS
           </motion.div>
 
           <motion.div
             ref={line3Ref}
-            className="uppercase tracking-[0.35em] text-5xl md:text-8xl font-semibold"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.9, delay: 0.9 }}
-            onAnimationComplete={() => runMeasureRef.current()}
+            className="uppercase tracking-[0.15em] sm:tracking-[0.35em] text-3xl sm:text-5xl md:text-8xl font-semibold"
           >
             TECHNOLOGY
           </motion.div>
@@ -210,7 +195,7 @@ const Hero = () => {
         {pos.centers.map((c, i) => (
           <motion.div
             key={i}
-            className="absolute w-3 h-3 rounded-full bg-orange-500 -translate-x-1/2 -translate-y-1/2"
+            className="absolute w-2.5 sm:w-3 h-2.5 sm:h-3 rounded-full bg-orange-500 -translate-x-1/2 -translate-y-1/2"
             style={{
               left: `${pos.left}px`,
               top: `${c}px`,
@@ -231,4 +216,5 @@ const Hero = () => {
 };
 
 export default Hero;
+
 
