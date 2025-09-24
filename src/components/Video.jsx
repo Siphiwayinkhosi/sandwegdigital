@@ -37,7 +37,7 @@ export const MacbookScroll = ({ title, showGradient }) => {
 
   const [isMobile, setIsMobile] = useState(false);
   useEffect(() => {
-    if (window && window.innerWidth < 768) setIsMobile(true);
+    if (typeof window !== "undefined" && window.innerWidth < 768) setIsMobile(true);
   }, []);
 
   const scaleX = useTransform(scrollYProgress, [0, 0.3], [1.2, isMobile ? 1 : 1.6]);
@@ -53,7 +53,7 @@ export const MacbookScroll = ({ title, showGradient }) => {
       className="
         flex min-h-[200vh] shrink-0 scale-[0.55] flex-col items-center justify-start py-0 [perspective:1200px]
         sm:scale-75 md:scale-100 md:py-60
-        max-[639px]:scale-90
+        max-[639px]:scale-[0.42]   /* ↓ smaller on mobile so nothing gets cut */
       "
     >
       <motion.h2
@@ -69,27 +69,32 @@ export const MacbookScroll = ({ title, showGradient }) => {
       <div
         className="
           relative -z-10 h-[34rem] w-[56rem] overflow-hidden rounded-2xl bg-gray-200 dark:bg-[#272729]
-          max-[639px]:h-[16rem] max-[639px]:w-full
+          /* keep desktop size; mobile is handled by outer scale */
         "
       >
+        {/* Hinge */}
         <div className="relative h-10 w-full">
           <div className="absolute inset-x-0 mx-auto h-4 w-[80%] bg-[#050505]" />
         </div>
+
+        {/* Keyboard + Speakers */}
         <div className="relative flex">
           <div className="mx-auto h-full w-[10%] overflow-hidden">
             <SpeakerGrid />
           </div>
-          <div className="mx-auto h-full w-[80%] overflow-hidden scale-[1.05]">
+          <div className="mx-auto h-full w-[80%] max-[639px]:w-[90%] overflow-hidden scale-[1.05]">
             <Keypad />
           </div>
           <div className="mx-auto h-full w-[10%] overflow-hidden">
             <SpeakerGrid />
           </div>
         </div>
+
         <Trackpad />
+
         <div className="absolute inset-x-0 bottom-0 mx-auto h-2 w-24 rounded-tl-3xl rounded-tr-3xl bg-gradient-to-t from-[#272729] to-[#050505]" />
         {showGradient && (
-          <div className="absolute inset-x-0 bottom-0 z-50 h-40 w-full bg-gradient-to-t from-white via-white to-transparent dark:from-black dark:via-black"></div>
+          <div className="absolute inset-x-0 bottom-0 z-50 h-40 w-full bg-gradient-to-t from-white via-white to-transparent dark:from-black dark:via-black" />
         )}
       </div>
     </div>
@@ -107,6 +112,7 @@ export const Lid = ({ scaleX, scaleY, rotate, translate }) => {
 
   return (
     <div className="relative [perspective:1200px]">
+      {/* Fake lid face */}
       <div
         style={{
           transform: "perspective(1200px) rotateX(-25deg) translateZ(0px)",
@@ -115,20 +121,19 @@ export const Lid = ({ scaleX, scaleY, rotate, translate }) => {
         }}
         className="
           relative h-[22rem] w-[56rem] rounded-2xl bg-[#010101] p-2
-          max-[639px]:h-[14rem] max-[639px]:w-full
         "
       >
         <div
           style={{ boxShadow: "0px 2px 0px 2px #171717 inset" }}
           className="absolute inset-0 flex items-center justify-center rounded-lg bg-[#010101]"
         >
-          <span className="text-white text-xl md:text-2xl lg:text-3xl max-[639px]:text-base">
+          <span className="text-white text-xl md:text-2xl lg:text-3xl">
             Sandweg <br /> Branding & Marketing
           </span>
         </div>
       </div>
 
-      {/* Lid + Video */}
+      {/* Lid + Video (absolute overlay) */}
       <motion.div
         style={{
           scaleX,
@@ -141,13 +146,15 @@ export const Lid = ({ scaleX, scaleY, rotate, translate }) => {
         className="
           absolute inset-0 
           w-[56rem] h-[34rem] rounded-2xl bg-[#010101] p-2
-          max-sm:w-full max-sm:h-auto
+          max-[639px]:h-[18rem]  /* ← never auto; fixed height avoids gray line */
+          max-[639px]:w-[56rem]  /* keep full width, rely on outer scale */
         "
       >
         <div className="absolute inset-0 rounded-lg bg-[#272729]" />
         <video
           ref={videoRef}
           src="/video.mp4"
+          autoPlay
           muted
           playsInline
           loop
@@ -166,10 +173,10 @@ export const Trackpad = () => (
   <div
     className="
       mx-auto my-2 h-32 w-[45%] rounded-xl
-      max-[639px]:h-20 max-[639px]:w-[65%]
+      max-[639px]:h-20 max-[639px]:w-[60%]
     "
     style={{ boxShadow: "0px 0px 1px 1px #00000020 inset" }}
-  ></div>
+  />
 );
 
 export const Keypad = () => {
@@ -222,7 +229,7 @@ export const Keypad = () => {
         <KBtn className="w-16">ctrl</KBtn>
         <KBtn className="w-16">opt</KBtn>
         <KBtn className="w-20">cmd</KBtn>
-        <KBtn className="w-[20rem] max-[639px]:w-full">space</KBtn>
+        <KBtn className="w-[20rem] max-[639px]:w-[12rem]">space</KBtn>
         <KBtn className="w-20">cmd</KBtn>
         <KBtn className="w-16">opt</KBtn>
         <div className="flex flex-col ml-2">
@@ -263,9 +270,5 @@ export const SpeakerGrid = () => (
       backgroundImage: "radial-gradient(circle, #08080A 0.5px, transparent 0.5px)",
       backgroundSize: "3px 3px",
     }}
-  ></div>
+  />
 );
-
-
-
-
