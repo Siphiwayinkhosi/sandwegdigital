@@ -14,7 +14,8 @@ function cn(...classes) {
 
 export default function Video() {
   return (
-    <div className="w-full overflow-hidden bg-black -mt-8">
+    // ⬇️ allow vertical overflow so the video isn't clipped during scroll
+    <div className="w-full overflow-x-hidden bg-black -mt-8">
       <MacbookScroll
         title={
           <span>
@@ -30,9 +31,12 @@ export default function Video() {
 
 export const MacbookScroll = ({ title, showGradient }) => {
   const ref = useRef(null);
+
+  // Start animating only after the section's top reaches the CENTER of the viewport,
+  // so the laptop is fully visible first.
   const { scrollYProgress } = useScroll({
     target: ref,
-    offset: ["start start", "end start"],
+    offset: ["start center", "end start"],
   });
 
   const [isMobile, setIsMobile] = useState(false);
@@ -51,14 +55,22 @@ export const MacbookScroll = ({ title, showGradient }) => {
     <div
       ref={ref}
       className="
-        flex min-h-[200vh] shrink-0 scale-[0.55] flex-col items-center justify-start py-0 [perspective:1200px]
-        sm:scale-75 md:scale-100 md:py-60
-        max-[639px]:scale-[0.42]   /* ↓ smaller on mobile so nothing gets cut */
+        flex min-h-[200vh] shrink-0 flex-col items-center [perspective:1200px]
+        /* On mobile: center the rig initially to remove big top gap and ensure full visibility */
+        justify-center
+        /* base scale for tiny screens so the whole laptop fits */
+        max-[639px]:scale-[0.48]
+        /* original scales for larger screens */
+        sm:justify-start sm:scale-75 md:scale-100 md:py-60
       "
     >
       <motion.h2
         style={{ translateY: textTransform, opacity: textOpacity }}
-        className="mb-16 text-center text-4xl font-bold text-neutral-800 dark:text-white max-[639px]:text-2xl max-[639px]:px-4"
+        className="
+          mb-16 text-center text-4xl font-bold text-neutral-800 dark:text-white
+          /* bigger + tighter on mobile */
+          max-[639px]:text-3xl max-[639px]:leading-snug max-[639px]:mb-6 max-[639px]:px-4
+        "
       >
         {title}
       </motion.h2>
@@ -69,7 +81,7 @@ export const MacbookScroll = ({ title, showGradient }) => {
       <div
         className="
           relative -z-10 h-[34rem] w-[56rem] overflow-hidden rounded-2xl bg-gray-200 dark:bg-[#272729]
-          /* keep desktop size; mobile is handled by outer scale */
+          /* keep fixed desktop size; mobile fit handled by outer scale */
         "
       >
         {/* Hinge */}
@@ -82,6 +94,7 @@ export const MacbookScroll = ({ title, showGradient }) => {
           <div className="mx-auto h-full w-[10%] overflow-hidden">
             <SpeakerGrid />
           </div>
+          {/* give the keyboard a bit more width headroom on small screens (via outer scale it fits) */}
           <div className="mx-auto h-full w-[80%] max-[639px]:w-[90%] overflow-hidden scale-[1.05]">
             <Keypad />
           </div>
@@ -111,8 +124,8 @@ export const Lid = ({ scaleX, scaleY, rotate, translate }) => {
   }, []);
 
   return (
-    <div className="relative [perspective:1200px]">
-      {/* Fake lid face */}
+    <div className="relative overflow-visible [perspective:1200px]">
+      {/* Lid face */}
       <div
         style={{
           transform: "perspective(1200px) rotateX(-25deg) translateZ(0px)",
@@ -133,7 +146,7 @@ export const Lid = ({ scaleX, scaleY, rotate, translate }) => {
         </div>
       </div>
 
-      {/* Lid + Video (absolute overlay) */}
+      {/* Screen + video (absolute overlay, no vertical clipping) */}
       <motion.div
         style={{
           scaleX,
@@ -146,8 +159,8 @@ export const Lid = ({ scaleX, scaleY, rotate, translate }) => {
         className="
           absolute inset-0 
           w-[56rem] h-[34rem] rounded-2xl bg-[#010101] p-2
-          max-[639px]:h-[18rem]  /* ← never auto; fixed height avoids gray line */
-          max-[639px]:w-[56rem]  /* keep full width, rely on outer scale */
+          max-[639px]:h-[18rem]  /* fixed height on mobile to avoid gray line */
+          max-[639px]:w-[56rem]
         "
       >
         <div className="absolute inset-0 rounded-lg bg-[#272729]" />
