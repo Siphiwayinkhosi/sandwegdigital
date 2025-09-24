@@ -69,7 +69,7 @@ export const MacbookScroll = ({ title, showGradient }) => {
       <div
         className="
           relative -z-10 h-[34rem] w-[56rem] overflow-hidden rounded-2xl bg-gray-200 dark:bg-[#272729]
-          max-[639px]:h-[16rem] max-[639px]:w-[22rem]
+          max-[639px]:h-[16rem] max-[639px]:w-full
         "
       >
         <div className="relative h-10 w-full">
@@ -115,7 +115,7 @@ export const Lid = ({ scaleX, scaleY, rotate, translate }) => {
         }}
         className="
           relative h-[22rem] w-[56rem] rounded-2xl bg-[#010101] p-2
-          max-[639px]:h-[14rem] max-[639px]:w-[22rem]
+          max-[639px]:h-[14rem] max-[639px]:w-full
         "
       >
         <div
@@ -128,40 +128,36 @@ export const Lid = ({ scaleX, scaleY, rotate, translate }) => {
         </div>
       </div>
 
- {/* Lid + Video */}
-<motion.div
-  style={{
-    scaleX,
-    scaleY,
-    rotateX: rotate,
-    translateY: translate,
-    transformStyle: "preserve-3d",
-    transformOrigin: "top",
-  }}
-  className="
-    absolute inset-0 
-    w-[56rem] h-[34rem] rounded-2xl bg-[#010101] p-2
-    max-sm:w-full max-sm:h-auto
-  "
->
-
-  <div className="absolute inset-0 rounded-lg bg-[#272729]" />
-<video
-  ref={videoRef}
-  src="/video.mp4"
-  muted
-  playsInline
-  loop
-  className="
-    absolute inset-0 
-    h-full w-full 
-    rounded-lg object-contain bg-black
-    max-sm:w-screen max-sm:h-auto
-  "
-/>
-
-</motion.div>
-
+      {/* Lid + Video */}
+      <motion.div
+        style={{
+          scaleX,
+          scaleY,
+          rotateX: rotate,
+          translateY: translate,
+          transformStyle: "preserve-3d",
+          transformOrigin: "top",
+        }}
+        className="
+          absolute inset-0 
+          w-[56rem] h-[34rem] rounded-2xl bg-[#010101] p-2
+          max-sm:w-full max-sm:h-auto
+        "
+      >
+        <div className="absolute inset-0 rounded-lg bg-[#272729]" />
+        <video
+          ref={videoRef}
+          src="/video.mp4"
+          muted
+          playsInline
+          loop
+          className="
+            absolute inset-0 
+            w-full h-full 
+            rounded-lg object-contain bg-black
+          "
+        />
+      </motion.div>
     </div>
   );
 };
@@ -226,7 +222,7 @@ export const Keypad = () => {
         <KBtn className="w-16">ctrl</KBtn>
         <KBtn className="w-16">opt</KBtn>
         <KBtn className="w-20">cmd</KBtn>
-        <KBtn className="w-[20rem] max-[639px]:w-[12rem]">space</KBtn>
+        <KBtn className="w-[20rem] max-[639px]:w-full">space</KBtn>
         <KBtn className="w-20">cmd</KBtn>
         <KBtn className="w-16">opt</KBtn>
         <div className="flex flex-col ml-2">
